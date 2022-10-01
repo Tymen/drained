@@ -1,5 +1,5 @@
 const { roles } = require('../../config.json')
-let maxMembers = 2;
+let maxMembers = 5;
 const getMembers = (channelState) => {
     let memberCount = channelState.channel.members;
     return memberCount
@@ -11,7 +11,7 @@ const createPrivateVoice = async (server, onJoinState, category, channelName) =>
     }).then((channel) => {
         if(category){
             channel.setParent(category.id)
-            channel.setUserLimit(2)
+            channel.setUserLimit(maxMembers)
         }
         onJoinState.member.voice.setChannel(channel.id)
     })

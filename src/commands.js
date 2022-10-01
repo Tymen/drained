@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const { customMessage } = require('./customMessage')
 const { serverStatus } = require('./serverStatus/main');
+const { updateLimit } = require('./privateVoice/main');
 const { announcer } = require('./announcer/index')
 const { channelId } = require('../config.json')
 const gPolicies = require('./policies/generalPolicies').generalPolicies;
@@ -29,6 +30,15 @@ const EventResponse = async (message, client, server) => {
 
         const args = message.content.slice(prefix.length).trim().split(' ');
         const command = args.shift().toLowerCase();
+        switch(command) {
+            case 'setlimit':
+                let getChannel = message.member.voice.channel;
+                if (getChannel) {
+                    await updateLimit(server, getChannel, args[0])
+                    await reply(message, "voice channel limit updated to: " + args[0])
+                }
+                break;
+        }
         // switch(command) {
         //     case 'help':
         //         await gPolicies.hasAdminRole(message.member).then(async () => {

@@ -1,0 +1,8 @@
+{
+    "roleCounters": [
+            {"channel_id": "994586001953521736", "role_id": "993914768190611476", "channel_title": "admins:"},
+            {"channel_id": "994598879095947404", "role_id": "993915188044632075", "channel_title": "moderators:"},
+            {"channel_id": "994711970148257802", "role_id": "994712318397132871", "channel_title": "boosters:"},
+            {"channel_id": "994712910683185202", "role_id": "993915460108156970", "channel_title": "helpers:"}
+    ]
+}

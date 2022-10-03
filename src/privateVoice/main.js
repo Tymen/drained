@@ -1,5 +1,5 @@
 const { roles } = require('../../config.json')
-let maxMembers = 5;
+let maxMembers = 3;
 const getMembers = (channelState) => {
     let memberCount = channelState.channel.members;
     return memberCount
@@ -41,7 +41,6 @@ const privateVoice = async(onLeftState, onJoinState, server, privateChannelID) =
 
     if (getVCJoin) {
         let getParentId = await onJoinState.member.voice.channel.parentId;
-
         if (getVCJoin.id == privateChannelID) {
             const voiceChannelName = `private`
             await createPrivateVoice(server, onJoinState, getCategory, voiceChannelName)
@@ -49,7 +48,7 @@ const privateVoice = async(onLeftState, onJoinState, server, privateChannelID) =
 
         if(getParentId === getCategory.id) {
             const memberCount = getMembers(onJoinState).size
-            if (memberCount >= maxMembers) {
+            if (memberCount >= onLeftState.channel.userLimit) {
                 await updatePrivateVoicePerms(server, onJoinState.member.voice.channel.id, {
                     'VIEW_CHANNEL': false,
                     'CONNECT': false
@@ -63,7 +62,7 @@ const privateVoice = async(onLeftState, onJoinState, server, privateChannelID) =
         if (getParentId === getCategory.id) {
             if(onLeftState.channel.parent.id  === getCategory.id) {
                 const memberCount = getMembers(onLeftState).size
-                if (memberCount < maxMembers) {
+                if (memberCount < onLeftState.channel.userLimit) {
                     await updatePrivateVoicePerms(server, onLeftState.channel.id, {
                         'VIEW_CHANNEL': true,
                         'CONNECT': true

@@ -8,17 +8,21 @@ const getMembers = (channelState) => {
 const createPrivateVoice = async (server, onJoinState, category, channelName) => {
     await server.channels.create(channelName, {
         type: 'GUILD_VOICE',
-    }).then((channel) => {
+    }).then( async (channel) => {
         if(category){
             channel.setParent(category.id)
-            channel.setUserLimit(maxMembers)
+            channel.setUserLimit(maxMembers)   
+            await updatePrivateVoicePerms(server, channel.id, {
+                'VIEW_CHANNEL': true,
+                'CONNECT': true
+            })            
         }
         onJoinState.member.voice.setChannel(channel.id)
     })
 }
 
 const updatePrivateVoicePerms = async (server, channelId, permissions) => {
-    await server.channels.cache.get(channelId).permissionOverwrites.create(roles.Meep, permissions)
+    await server.channels.cache.get(channelId).permissionOverwrites.create(roles.Galaxy, permissions)
 }
 const updateLimit = async (server, channel, limit) => {
     await channel.setUserLimit(limit)
@@ -48,7 +52,7 @@ const privateVoice = async(onLeftState, onJoinState, server, privateChannelID) =
 
         if(getParentId === getCategory.id) {
             const memberCount = getMembers(onJoinState).size
-            if (memberCount >= onLeftState.channel.userLimit) {
+            if (memberCount >= onJoinState.channel.userLimit) {
                 await updatePrivateVoicePerms(server, onJoinState.member.voice.channel.id, {
                     'VIEW_CHANNEL': false,
                     'CONNECT': false

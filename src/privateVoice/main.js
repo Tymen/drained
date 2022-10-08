@@ -42,7 +42,7 @@ const updateLimit = async (server, channel, limit) => {
         }
         return "voice channel limit updated to: " + limit
     } catch (err){
-        console.log(err)
+        console.log(err.code == 50035 ? "Bad Request User limit was to high" : "Something else went wrong with changing user limit")
         return "Something went wrong! Try again!"
     }
 

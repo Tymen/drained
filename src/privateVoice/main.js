@@ -40,7 +40,7 @@ const updateLimit = async (server, channel, limit) => {
                 'CONNECT': true
             })
         }
-        return "voice channel limit updated to: " + args[0]
+        return "voice channel limit updated to: " + limit
     } catch (err){
         console.log(err)
         return "Something went wrong! Try again!"

@@ -34,8 +34,8 @@ const EventResponse = async (message, client, server) => {
             case 'setlimit':
                 let getChannel = message.member.voice.channel;
                 if (getChannel) {
-                    await updateLimit(server, getChannel, args[0])
-                    await reply(message, "voice channel limit updated to: " + args[0])
+                    let replyMessage = await updateLimit(server, getChannel, args[0])
+                    await reply(message, replyMessage)
                 }
                 break;
         }

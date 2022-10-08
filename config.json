@@ -1,20 +1,20 @@
 {
     "roles": {
-        "OWNER": "993914061089673249",
-        "MAINADMIN": "993914612628074506",
+        "OWNER": "",
+        "MAINADMIN": "",
         "CONVERSATIONS": "994955270042165268",
-        "Meep": "994375039224922274",
-        "ADMIN": "993914768190611476",
-        "MAINMOD": "993914893877133403",
-        "MOD": "993915188044632075"
+        "Meep": "",
+        "ADMIN": "",
+        "MAINMOD": "",
+        "MOD": ""
     },
     "channelId": {
-        "privateVoice": "1025745345306710076",
-        "announcement": "993917537211392040",
-        "events": "996482879481716796",
-        "admin": "1016104228806213784",
-        "mod": "1016104186053664808",
-        "primaryHelp": "993917573009780807",
-        "primarySuggestion": "993917614319484938"
+        "privateVoice": "",
+        "announcement": "",
+        "events": "",
+        "admin": "",
+        "mod": "",
+        "primaryHelp": "",
+        "primarySuggestion": ""
     }
 }

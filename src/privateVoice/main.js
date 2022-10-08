@@ -21,19 +21,27 @@ const updatePrivateVoicePerms = async (server, channelId, permissions) => {
     await server.channels.cache.get(channelId).permissionOverwrites.create(roles.Meep, permissions)
 }
 const updateLimit = async (server, channel, limit) => {
-    await channel.setUserLimit(limit)
-    const memberCount = channel.members.size
-    if (memberCount >= limit) {
-        await updatePrivateVoicePerms(server, channel.id, {
-            'VIEW_CHANNEL': false,
-            'CONNECT': false
-        })
-    } else {
-        await updatePrivateVoicePerms(server, channel.id, {
-            'VIEW_CHANNEL': true,
-            'CONNECT': true
-        })
+    try {
+        await channel.setUserLimit(limit)
+        await channel.setUserLimit(limit)
+        const memberCount = channel.members.size
+        if (memberCount >= limit) {
+            await updatePrivateVoicePerms(server, channel.id, {
+                'VIEW_CHANNEL': false,
+                'CONNECT': false
+            })
+        } else {
+            await updatePrivateVoicePerms(server, channel.id, {
+                'VIEW_CHANNEL': true,
+                'CONNECT': true
+            })
+        }
+        return "voice channel limit updated to: " + args[0]
+    } catch (err){
+        console.log(err)
+        return "Something went wrong! Try again!"
     }
+
 }
 const privateVoice = async(onLeftState, onJoinState, server, privateChannelID) => {
     const getVCJoin = onJoinState.member.voice.channel;
@@ -48,6 +56,7 @@ const privateVoice = async(onLeftState, onJoinState, server, privateChannelID) =
         }
 
         if(getParentId === getCategory.id) {
+            console.log(onLeftState.channel)
             const memberCount = getMembers(onJoinState).size
             if (memberCount >= maxMembers) {
                 await updatePrivateVoicePerms(server, onJoinState.member.voice.channel.id, {
